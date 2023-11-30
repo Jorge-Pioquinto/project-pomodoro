@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Pomodoro tasks</h1>
+
+<div id="pomodoro_tasks">
+  <% @pomodoro_tasks.each do |pomodoro_task| %>
+    <%= render pomodoro_task %>
+    <p>
+      <%= link_to "Show this pomodoro task", pomodoro_task %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New pomodoro task", new_pomodoro_task_path %>

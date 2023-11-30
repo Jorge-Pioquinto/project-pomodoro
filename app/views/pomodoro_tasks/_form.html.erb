@@ -1,0 +1,32 @@
+<%= form_with(model: pomodoro_task) do |form| %>
+  <% if pomodoro_task.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(pomodoro_task.errors.count, "error") %> prohibited this pomodoro_task from being saved:</h2>
+
+      <ul>
+        <% pomodoro_task.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :pomodoro_id, style: "display: block" %>
+    <%= form.text_field :pomodoro_id %>
+  </div>
+
+  <div>
+    <%= form.label :task_id, style: "display: block" %>
+    <%= form.text_field :task_id %>
+  </div>
+
+  <div>
+    <%= form.label :completed, style: "display: block" %>
+    <%= form.check_box :completed %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
