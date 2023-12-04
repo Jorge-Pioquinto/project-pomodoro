@@ -2,13 +2,13 @@
 
 <h1>Pomodoros</h1>
 
+<%= link_to "New pomodoro", new_pomodoro_path %>
+
 <div id="pomodoros">
   <% @pomodoros.each do |pomodoro| %>
     <%= render pomodoro %>
     <p>
-      <%= link_to "Show this pomodoro", pomodoro %>
+      <%= link_to "Details", pomodoro %>
     </p>
   <% end %>
 </div>
-
-<%= link_to "New pomodoro", new_pomodoro_path %>
