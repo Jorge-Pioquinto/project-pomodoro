@@ -22,6 +22,7 @@ class PomodorosController < ApplicationController
   # POST /pomodoros or /pomodoros.json
   def create
     @pomodoro = Pomodoro.new(pomodoro_params)
+    @pomodoro.user = current_user
 
     respond_to do |format|
       if @pomodoro.save
@@ -65,6 +66,6 @@ class PomodorosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def pomodoro_params
-      params.require(:pomodoro).permit(:user_id, :focus_time, :break_time)
+      params.require(:pomodoro).permit(:user_id, :focus_time, :break_time, pomodoro_tasks_attributes: [:task_id])
     end
 end

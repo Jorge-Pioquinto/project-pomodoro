@@ -22,4 +22,13 @@
 class PomodoroTask < ApplicationRecord
   belongs_to :pomodoro
   belongs_to :task
+
+  after_destroy :destroy_orphaned_pomodoro
+  
+  private
+
+  def destroy_orphaned_pomodoro
+    pomodoro.destroy if pomodoro.tasks.empty?
+  end
+
 end
