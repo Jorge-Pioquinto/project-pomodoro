@@ -12,7 +12,7 @@ class PomodorosController < ApplicationController
 
   # GET /pomodoros/new
   def new
-    @pomodoro = Pomodoro.new
+    @pomodoro = Pomodoro.new(focus_time: 25, break_time: 5)
   end
 
   # GET /pomodoros/1/edit
@@ -66,6 +66,6 @@ class PomodorosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def pomodoro_params
-      params.require(:pomodoro).permit(:user_id, :focus_time, :break_time, pomodoro_tasks_attributes: [:task_id])
+      params.require(:pomodoro).permit(:user_id, :focus_time, :break_time, pomodoro_tasks_attributes: [:id, :task_id])
     end
 end

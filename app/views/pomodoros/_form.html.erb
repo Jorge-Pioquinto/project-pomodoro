@@ -12,20 +12,20 @@
   <% end %>
 
   <div>
-<%= form.fields_for(:pomodoro_tasks, pomodoro.pomodoro_tasks.new) do |pomodoro_tasks_form| %>
-  <%= form.label :task_id, style: "display: block" %>
-  <%= pomodoro_tasks_form.select :task_id, Task.all.collect { |t| [t.description, t.id] }, selected: Task.order(created_at: :desc).first&.id, include_blank: false %>
-<% end %>
+<%= form.fields_for(:pomodoro_tasks, pomodoro.new_record? ? pomodoro.pomodoro_tasks.new : pomodoro.pomodoro_tasks) do |pomodoro_tasks_form| %>
+      <%= form.label :task_id, style: "display: block" %>
+      <%= pomodoro_tasks_form.select :task_id, Task.all.collect { |t| [t.description, t.id] }, selected: Task.order(created_at: :desc).first&.id, include_blank: false %>
+    <% end %>
   </div>
 
   <div>
     <%= form.label :focus_time, style: "display: block" %>
-    <%= form.number_field :focus_time, value: @pomodoro.focus_time || 25 %>
+    <%= form.number_field :focus_time %>
   </div>
 
   <div>
     <%= form.label :break_time, style: "display: block" %>
-    <%= form.number_field :break_time, value: @pomodoro.focus_time || 5 %>
+    <%= form.number_field :break_time %>
   </div>
 
   <div>
