@@ -23,4 +23,5 @@ class Pomodoro < ApplicationRecord
   has_many :tasks, through: :pomodoro_tasks
 
   accepts_nested_attributes_for :pomodoro_tasks
+  accepts_nested_attributes_for :tasks
 end

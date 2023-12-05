@@ -11,6 +11,13 @@
     </div>
   <% end %>
 
+  <% pomodoro.tasks.each do |task| %>
+    <p>
+      <strong><%= task.description %></strong>
+
+    </p>
+  <% end %>
+
   <div>
     <%= form.label :focus_time, style: "display: block" %>
     <%= form.number_field :focus_time %>
@@ -20,6 +27,15 @@
     <%= form.label :break_time, style: "display: block" %>
     <%= form.number_field :break_time %>
   </div>
+
+  <%# pomodoro.pomodoro_tasks.each do |pomodoro_task| %>
+    <%#= form.fields_for :pomodoro_tasks, pomodoro_task do |pomodoro_task_fields| %>
+<!--      <p>
+        <strong>Completed</strong>
+        <%#= pomodoro_task_fields.check_box :completed %>-->
+<!--      </p>-->
+    <%# end %>
+  <%# end %>
 
   <div>
     <%= form.submit %>

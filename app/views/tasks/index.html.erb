@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>To-Do List</h1>
-
+<!--  <p>Total tasks: <%#= @tasks.count %></p>-->
 <div>
   <%= render "form", task: Task.new %>
 </div>
@@ -9,8 +9,11 @@
 <div id="tasks">
   <% @tasks.each do |task| %>
     <%= render task %>
-    <p>
-      <%= link_to "Show this task", task %>
-    </p>
+
+    <div class="button-group">
+      <%= button_to "Edit", edit_task_path(task), method: :get %>
+      <%= button_to "Delete", task, method: :delete%>
+    </div>
+    <br>
   <% end %>
 </div>
