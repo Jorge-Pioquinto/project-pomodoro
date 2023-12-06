@@ -66,6 +66,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:user_id, :description)
+      params.require(:task).permit(:user_id, :description, pomodoro_task_attributes: [:id, :pomodoro_id, :task_id, :complete, :_destroy])
     end
 end
