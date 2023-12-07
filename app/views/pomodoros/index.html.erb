@@ -7,12 +7,11 @@
 </div>
 
 <div id="pomodoros">
-<% @pomodoros.each do |pomodoro| %>
-  <%= render pomodoro %>
-  <p>
-    <%= button_to "Edit", edit_pomodoro_path(pomodoro), method: :get%>
-    <%= button_to "Delete", pomodoro, method: :delete%>
-<%= button_tag "Start", id: "start_#{pomodoro.id}", data: { focus_time: pomodoro.focus_time, break_time: pomodoro.break_time } %>
-<span id="start-#{pomodoro.id}">00:00</span>
-  </p>
-<% end %>
+  <% @pomodoros.each do |pomodoro| %>
+    <%= render pomodoro %>
+    <p>
+      <%= button_to "Start", timer_pomodoro_path(pomodoro), method: :get %>
+      <%= button_to "Edit", edit_pomodoro_path(pomodoro), method: :get%>
+      <%= button_to "Delete", pomodoro, method: :delete%>
+    </p>
+  <% end %>

@@ -58,6 +58,10 @@ class PomodorosController < ApplicationController
     end
   end
 
+    def timer
+      @pomodoro = Pomodoro.find(params[:id])
+    end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pomodoro
