@@ -3,7 +3,7 @@
 # Table name: pomodoro_tasks
 #
 #  id          :integer          not null, primary key
-#  completed   :boolean
+#  completed   :boolean          default(FALSE)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  pomodoro_id :integer          not null
