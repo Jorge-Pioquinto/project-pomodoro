@@ -1,10 +1,11 @@
-<div id="phase"></div>
+<h1
+><div id="phase"></div>
 <div id="message"></div>
 <div id="timer" class="countdown-timer"></div>
 <progress id="progress" max="1" value="1"></progress>
 <button id="pause/resume">Pause/Resume</button>
 <button id="reset">Reset</button>
-
+</h1>
 <script>
   var focusTime = <%= @pomodoro.focus_time * 60 %>;
   var breakTime = <%= @pomodoro.break_time * 60 %>;
@@ -35,9 +36,19 @@
           startTime = Date.now();
           document.getElementById('phase').textContent = 'Focus time';
           alert('Break time is done.');
-          // Check if the timer and break are both done
           clearInterval(timerId); // Stop the timer
           document.getElementById('phase').textContent = 'You completed a pomodoro'; // Display the completion message
+
+          // Add this AJAX request
+          fetch('<%= complete_pomodoro_task_path(@pomodoro.id) %>', {
+            method: 'PATCH',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': '<%= form_authenticity_token %>'
+            },
+            credentials: 'same-origin'
+          });
         }
       }
       // Update the countdown on the page
@@ -52,6 +63,7 @@
       document.getElementById('progress').value = countdown;
     }
   }, 1000);
+
   document.getElementById('pause/resume').addEventListener('click', function() {
     isPaused = !isPaused;
     if (isPaused) {

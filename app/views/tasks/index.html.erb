@@ -5,15 +5,21 @@
 <div>
   <%= render "form", task: Task.new %>
 </div>
-
+<br>
 <div id="tasks">
   <% @tasks.each do |task| %>
-    <%= render task %>
+    <%= render 'task', task: task %>
 
     <div class="button-group">
       <%= button_to "Edit", edit_task_path(task), method: :get %>
       <%= button_to "Delete", task, method: :delete%>
     </div>
+
+    <div class="pomodoro-tasks-completed">
+      <strong>Completed Pomodoros:</strong>
+      <%= task.pomodoro_tasks.where(completed: true).count %>
+    </div>
+
     <br>
   <% end %>
 </div>

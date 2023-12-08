@@ -6,6 +6,8 @@
   <%= render "form", pomodoro: Pomodoro.new(focus_time: 25, break_time: 5) %>
 </div>
 
+<br>
+
 <div id="pomodoros">
   <% @pomodoros.each do |pomodoro| %>
     <%= render pomodoro %>
