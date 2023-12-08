@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_08_000433) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_07_230716) do
   create_table "pomodoro_tasks", force: :cascade do |t|
-    t.integer "pomodoro_id"
+    t.integer "pomodoro_id", null: false
     t.integer "task_id", null: false
     t.boolean "completed", default: false
     t.datetime "created_at", null: false
