@@ -1,11 +1,10 @@
-<h1
-><div id="phase"></div>
+<div id="phase"></div>
 <div id="message"></div>
 <div id="timer" class="countdown-timer"></div>
 <progress id="progress" max="1" value="1"></progress>
 <button id="pause/resume">Pause/Resume</button>
 <button id="reset">Reset</button>
-</h1>
+
 <script>
   var focusTime = <%= @pomodoro.focus_time * 60 %>;
   var breakTime = <%= @pomodoro.break_time * 60 %>;
@@ -18,7 +17,7 @@
   document.getElementById('phase').textContent = 'Focus time';
   document.getElementById('progress').max = focusTime;
 
-  var timerId = setInterval(function() {
+  function updateTimer() {
     if (!isPaused) {
       var elapsedTime = Math.floor((Date.now() - startTime) / 1000);
       countdown = isBreakTime ? breakTime - elapsedTime : focusTime - elapsedTime;
@@ -49,6 +48,18 @@
             },
             credentials: 'same-origin'
           });
+
+          var restart = confirm("Do you want to start another pomodoro?");
+          if (restart) {
+            // Restart the pomodoro
+            countdown = focusTime;
+            isBreakTime = false;
+            startTime = Date.now();
+            timerId = setInterval(updateTimer, 1000);
+          } else {
+            // Redirect to the pomodoro menu
+            window.location.href = "/pomodoros"; // Replace with your actual pomodoro menu URL
+          }
         }
       }
       // Update the countdown on the page
@@ -62,7 +73,9 @@
       // Update the progress bar
       document.getElementById('progress').value = countdown;
     }
-  }, 1000);
+  }
+
+  var timerId = setInterval(updateTimer, 1000);
 
   document.getElementById('pause/resume').addEventListener('click', function() {
     isPaused = !isPaused;
