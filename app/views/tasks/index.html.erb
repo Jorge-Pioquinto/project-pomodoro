@@ -1,25 +1,22 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>To-Do List</h1>
-<!--  <p>Total tasks: <%#= @tasks.count %></p>-->
+
 <div>
   <%= render "form", task: Task.new %>
 </div>
+
 <br>
-<div id="tasks">
-  <% @tasks.each do |task| %>
-    <%= render 'task', task: task %>
 
-    <div class="button-group">
-      <%= button_to "Edit", edit_task_path(task), method: :get %>
-      <%= button_to "Delete", task, method: :delete%>
-    </div>
-
-    <div class="pomodoro-tasks-completed">
-      <strong>Completed Pomodoros:</strong>
-      <%= task.pomodoro_tasks.where(completed: true).count %>
-    </div>
-
-    <br>
-  <% end %>
-</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Description</th>
+      <th scope="col">Completed Pomodoros</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @tasks %>
+  </tbody>
+</table>
