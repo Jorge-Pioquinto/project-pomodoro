@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @pomodoro %>
+
+<div>
+  <%= link_to "Edit this pomodoro", edit_pomodoro_path(@pomodoro) %> |
+  <%= link_to "Back to pomodoros", pomodoros_path %>
+
+  <%= button_to "Destroy this pomodoro", @pomodoro, method: :delete %>
+</div>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @pomodoro_task %>
+
+<div>
+  <%= link_to "Edit this pomodoro task", edit_pomodoro_task_path(@pomodoro_task) %> |
+  <%= link_to "Back to pomodoro tasks", pomodoro_tasks_path %>
+
+  <%= button_to "Destroy this pomodoro task", @pomodoro_task, method: :delete %>
+</div>
