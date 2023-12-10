@@ -1,0 +1,87 @@
+<h1
+><div id="phase"></div>
+<div id="message"></div>
+<div id="timer" class="countdown-timer"></div>
+<progress id="progress" max="1" value="1"></progress>
+<button id="pause/resume">Pause/Resume</button>
+<button id="reset">Reset</button>
+</h1>
+<script>
+  var focusTime = <%= @pomodoro.focus_time * 60 %>;
+  var breakTime = <%= @pomodoro.break_time * 60 %>;
+
+  var countdown = focusTime;
+  var isBreakTime = false;
+  var isPaused = false;
+  var startTime = Date.now();
+
+  document.getElementById('phase').textContent = 'Focus time';
+  document.getElementById('progress').max = focusTime;
+
+  var timerId = setInterval(function() {
+    if (!isPaused) {
+      var elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+      countdown = isBreakTime ? breakTime - elapsedTime : focusTime - elapsedTime;
+      if (countdown <= 0) {
+        if (!isBreakTime) {
+          countdown = focusTime;
+          isBreakTime = true;
+          startTime = Date.now();
+          document.getElementById('phase').textContent = 'Break time';
+          alert('Focus time is up. Starting break time.');
+          document.getElementById('progress').max = breakTime;
+        } else {
+          countdown = focusTime;
+          isBreakTime = false;
+          startTime = Date.now();
+          document.getElementById('phase').textContent = 'Focus time';
+          alert('Break time is done.');
+          clearInterval(timerId); // Stop the timer
+          document.getElementById('phase').textContent = 'You completed a pomodoro'; // Display the completion message
+
+          // Add this AJAX request
+          fetch('<%= complete_pomodoro_task_path(@pomodoro.id) %>', {
+            method: 'PATCH',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': '<%= form_authenticity_token %>'
+            },
+            credentials: 'same-origin'
+          });
+        }
+      }
+      // Update the countdown on the page
+      var hours = Math.floor(countdown / 3600);
+      var minutes = Math.floor((countdown % 3600) / 60);
+      var seconds = countdown % 60;
+      document.getElementById('timer').textContent =
+        (hours < 10 ? '0' : '') + hours + ':' +
+        (minutes < 10 ? '0' : '') + minutes + ':' +
+        (seconds < 10 ? '0' : '') + seconds;
+      // Update the progress bar
+      document.getElementById('progress').value = countdown;
+    }
+  }, 1000);
+
+  document.getElementById('pause/resume').addEventListener('click', function() {
+    isPaused = !isPaused;
+    if (isPaused) {
+      this.textContent = 'Resume';
+    } else {
+      this.textContent = 'Pause';
+      startTime = Date.now() - (focusTime - countdown) * 1000;
+    }
+  });
+
+  document.getElementById('reset').addEventListener('click', function() {
+    countdown = focusTime;
+    isBreakTime = false;
+    isPaused = false;
+    startTime = Date.now();
+    document.getElementById('phase').textContent = 'Focus time';
+    document.getElementById('progress').max = focusTime;
+    document.getElementById('progress').value = countdown;
+    document.getElementById('pause/resume').textContent = 'Pause';
+  });
+</script>

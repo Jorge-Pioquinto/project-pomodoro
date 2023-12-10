@@ -3,7 +3,7 @@
 # Table name: pomodoro_tasks
 #
 #  id          :integer          not null, primary key
-#  completed   :boolean
+#  completed   :boolean          default(FALSE)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  pomodoro_id :integer          not null
@@ -22,4 +22,13 @@
 class PomodoroTask < ApplicationRecord
   belongs_to :pomodoro
   belongs_to :task
+
+  after_destroy :destroy_orphaned_pomodoro
+  
+  private
+
+  def destroy_orphaned_pomodoro
+    pomodoro.destroy if pomodoro.tasks.empty?
+  end
+
 end

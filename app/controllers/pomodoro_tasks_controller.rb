@@ -57,6 +57,12 @@ class PomodoroTasksController < ApplicationController
     end
   end
 
+  def complete
+    @pomodoro_task = PomodoroTask.find_by(pomodoro_id: params[:id])
+    @pomodoro_task.update(completed: true)
+    head :ok
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pomodoro_task

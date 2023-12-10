@@ -2,13 +2,18 @@
 
 <h1>Pomodoros</h1>
 
+<div>
+  <%= render "form", pomodoro: Pomodoro.new(focus_time: 25, break_time: 5) %>
+</div>
+
+<br>
+
 <div id="pomodoros">
   <% @pomodoros.each do |pomodoro| %>
     <%= render pomodoro %>
     <p>
-      <%= link_to "Show this pomodoro", pomodoro %>
+      <%= button_to "Start", timer_pomodoro_path(pomodoro), method: :get %>
+      <%= button_to "Edit", edit_pomodoro_path(pomodoro), method: :get%>
+      <%= button_to "Delete", pomodoro, method: :delete%>
     </p>
   <% end %>
-</div>
-
-<%= link_to "New pomodoro", new_pomodoro_path %>

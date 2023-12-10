@@ -3,7 +3,9 @@ class PomodorosController < ApplicationController
 
   # GET /pomodoros or /pomodoros.json
   def index
-    @pomodoros = Pomodoro.all
+    @pomodoros = Pomodoro.joins(:pomodoro_tasks)
+                         .where(pomodoro_tasks: { completed: false })
+                         .order(created_at: :desc)
   end
 
   # GET /pomodoros/1 or /pomodoros/1.json
@@ -12,7 +14,7 @@ class PomodorosController < ApplicationController
 
   # GET /pomodoros/new
   def new
-    @pomodoro = Pomodoro.new
+    @pomodoro = Pomodoro.new(focus_time: 25, break_time: 5)
   end
 
   # GET /pomodoros/1/edit
@@ -22,10 +24,11 @@ class PomodorosController < ApplicationController
   # POST /pomodoros or /pomodoros.json
   def create
     @pomodoro = Pomodoro.new(pomodoro_params)
+    @pomodoro.user = current_user
 
     respond_to do |format|
       if @pomodoro.save
-        format.html { redirect_to pomodoro_url(@pomodoro), notice: "Pomodoro was successfully created." }
+        format.html { redirect_to pomodoros_path, notice: "Pomodoro was successfully created." }
         format.json { render :show, status: :created, location: @pomodoro }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +41,7 @@ class PomodorosController < ApplicationController
   def update
     respond_to do |format|
       if @pomodoro.update(pomodoro_params)
-        format.html { redirect_to pomodoro_url(@pomodoro), notice: "Pomodoro was successfully updated." }
+        format.html { redirect_to pomodoros_path, notice: "Pomodoro was successfully updated." }
         format.json { render :show, status: :ok, location: @pomodoro }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,14 +60,19 @@ class PomodorosController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pomodoro
-      @pomodoro = Pomodoro.find(params[:id])
-    end
+  def timer
+    @pomodoro = Pomodoro.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def pomodoro_params
-      params.require(:pomodoro).permit(:user_id, :focus_time, :break_time)
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pomodoro
+    @pomodoro = Pomodoro.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def pomodoro_params
+    params.require(:pomodoro).permit(:user_id, :focus_time, :break_time, pomodoro_tasks_attributes: [:id, :task_id, :completed, :_destroy, task_attributes: [:id, :description]])
+  end
 end

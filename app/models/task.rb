@@ -18,5 +18,9 @@
 #
 class Task < ApplicationRecord
   belongs_to :user
-  has_many  :pomodoro_tasks, class_name: "PomodoroTask", foreign_key: "task_id", dependent: :destroy
+  has_many :pomodoro_tasks, dependent: :destroy
+  has_many :pomodoros, through: :pomodoro_tasks
+
+  accepts_nested_attributes_for :pomodoro_tasks
+  accepts_nested_attributes_for :pomodoros
 end

@@ -1,8 +1,10 @@
 <div id="<%= dom_id pomodoro %>">
-  <p>
-    <strong>User:</strong>
-    <%= pomodoro.user_id %>
-  </p>
+  <% pomodoro.tasks.each do |task| %>
+    <p>
+      <strong>Description:</strong>
+<%= task.description %>
+    </p>
+  <% end %>
 
   <p>
     <strong>Focus time:</strong>
