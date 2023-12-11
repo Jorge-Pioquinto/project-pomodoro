@@ -1,16 +1,16 @@
-<tr id="<%= dom_id task %>" class="table-danger">
-  <th>
+<tr id="<%= dom_id task %>" class="<%= cycle('table-primary', "") %>">
+  <td>
     <%= task.description %>
   </td>
-  <th>
+  <td class="text-left">
     <% task.pomodoro_tasks.where(completed: true).each do |_pomodoro| %>
       🍅
     <% end %>
   </td>
   <td>
-    <div class="btn-group">
-    <%= button_to "Edit", edit_task_path(task), method: :get, class: "btn btn-danger" %>
-    <%= button_to "Delete", task, method: :delete, class: "btn btn-danger" %>
+    <div class="btn-group me-2" role="group" aria-label="Second group">
+      <%= button_to "Edit", edit_task_path(task), method: :get, class: "btn btn-primary"%>
+      <%= button_to "Delete", task, method: :delete, class: "btn btn-primary" %>
     </div>
   </td>
 </tr>
