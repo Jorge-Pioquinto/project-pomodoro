@@ -1,9 +1,14 @@
-<div id="phase"></div>
+<h1><div id="phase"></div></h1>
 <div id="message"></div>
-<div id="timer" class="countdown-timer"></div>
+<h1><div id="timer" class="countdown-timer"></div></h1>
+
+
 <progress id="progress" max="1" value="1"></progress>
-<button id="pause/resume">Pause/Resume</button>
-<button id="reset">Reset</button>
+
+<br>
+
+<button id="pause/resume" class="btn btn-primary">Pause/Resume</button>
+<button id="reset" class="btn btn-primary">Reset</button>
 
 <script>
   var focusTime = <%= @pomodoro.focus_time * 60 %>;
@@ -14,7 +19,7 @@
   var isPaused = false;
   var startTime = Date.now();
 
-  document.getElementById('phase').textContent = 'Focus time';
+  document.getElementById('phase').textContent = 'Focus Time';
   document.getElementById('progress').max = focusTime;
 
   function updateTimer() {
@@ -27,16 +32,16 @@
           isBreakTime = true;
           startTime = Date.now();
           document.getElementById('phase').textContent = 'Break time';
-          alert('Focus time is up. Starting break time.');
+          alert('Focus Time is up. Starting Break Time.');
           document.getElementById('progress').max = breakTime;
         } else {
           countdown = focusTime;
           isBreakTime = false;
           startTime = Date.now();
-          document.getElementById('phase').textContent = 'Focus time';
+          document.getElementById('phase').textContent = 'Focus Time';
           alert('Break time is done.');
           clearInterval(timerId); // Stop the timer
-          document.getElementById('phase').textContent = 'You completed a pomodoro'; // Display the completion message
+          document.getElementById('phase').textContent = 'You Completed a Pomodoro!'; // Display the completion message
 
           // Add this AJAX request
           fetch('<%= complete_pomodoro_task_path(@pomodoro.id) %>', {
@@ -83,7 +88,11 @@
       this.textContent = 'Resume';
     } else {
       this.textContent = 'Pause';
-      startTime = Date.now() - (focusTime - countdown) * 1000;
+      if (isBreakTime) {
+  startTime = Date.now() - (breakTime - countdown) * 1000;
+} else {
+  startTime = Date.now() - (focusTime - countdown) * 1000;
+}
     }
   });
 
@@ -92,7 +101,7 @@
     isBreakTime = false;
     isPaused = false;
     startTime = Date.now();
-    document.getElementById('phase').textContent = 'Focus time';
+    document.getElementById('phase').textContent = 'Focus Time';
     document.getElementById('progress').max = focusTime;
     document.getElementById('progress').value = countdown;
     document.getElementById('pause/resume').textContent = 'Pause';
