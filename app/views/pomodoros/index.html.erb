@@ -1,5 +1,4 @@
-<p style="color: green"><%= notice %></p>
-
+<br>
 <h1>Pomodoros</h1>
 
 <div>
@@ -9,11 +8,19 @@
 <br>
 
 <div id="pomodoros">
-  <% @pomodoros.each do |pomodoro| %>
-    <%= render pomodoro %>
-    <p>
-      <%= button_to "Start", timer_pomodoro_path(pomodoro), method: :get %>
-      <%= button_to "Edit", edit_pomodoro_path(pomodoro), method: :get%>
-      <%= button_to "Delete", pomodoro, method: :delete%>
-    </p>
-  <% end %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Pomodoro</th>
+        <th scope="col">Focus Time</th>
+        <th scope="col">Break Time</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @pomodoros.each do |pomodoro| %>
+        <%= render pomodoro %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

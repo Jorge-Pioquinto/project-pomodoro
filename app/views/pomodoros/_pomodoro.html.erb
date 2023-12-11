@@ -1,19 +1,14 @@
-<div id="<%= dom_id pomodoro %>">
-  <% pomodoro.tasks.each do |task| %>
-    <p>
-      <strong>Description:</strong>
-<%= task.description %>
-    </p>
-  <% end %>
-
-  <p>
-    <strong>Focus time:</strong>
-    <%= pomodoro.focus_time %>
-  </p>
-
-  <p>
-    <strong>Break time:</strong>
-    <%= pomodoro.break_time %>
-  </p>
-
-</div>
+<% pomodoro.tasks.each do |task| %>
+  <tr id="<%= dom_id pomodoro %>" class="<%= cycle('table-primary', "") %>">
+    <td><%= task.description %></td>
+    <td><%= pomodoro.focus_time %></td>
+    <td><%= pomodoro.break_time %></td>
+    <td>
+          <div class="btn-group me-2" role="group" aria-label="Second group">
+      <%= button_to "Start", timer_pomodoro_path(pomodoro), method: :get, class: "btn btn-primary" %>
+      <%= button_to "Edit", edit_pomodoro_path(pomodoro), method: :get, class: "btn btn-primary"%>
+      <%= button_to "Delete", pomodoro, method: :delete, class: "btn btn-primary"%>
+          </div>
+    </td>
+  </tr>
+<% end %>
