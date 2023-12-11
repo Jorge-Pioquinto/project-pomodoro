@@ -12,23 +12,20 @@
   <% end %>
 
   <% pomodoro.tasks.each do |task| %>
-    <p>
-      <strong>Description:</strong>
-<%= task.description %>
-    </p>
+      <h5><%= task.description %></h5>
   <% end %>
 
-  <div>
-    <%= form.label :focus_time, style: "display: block" %>
-    <%= form.number_field :focus_time %>
-  </div>
+<div class="form-group">
+  <%= form.label :focus_time, class: "form-label mt-4", style: "display: block" %>
+  <%= form.number_field :focus_time, class: "form-control", placeholder: "Focus Time" %>
+</div>
+
+<div class="form-group">
+  <%= form.label :break_time, class: "form-label mt-4", style: "display: block" %>
+  <%= form.number_field :break_time, class: "form-control", placeholder: "Break Time" %>
+</div>
 
   <div>
-    <%= form.label :break_time, style: "display: block" %>
-    <%= form.number_field :break_time %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit class:"btn btn-primary" %>
   </div>
 <% end %>
