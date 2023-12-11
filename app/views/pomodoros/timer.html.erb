@@ -1,14 +1,14 @@
-<h1><div id="phase"></div></h1>
-<div id="message"></div>
-<h1><div id="timer" class="countdown-timer"></div></h1>
-
-
-<progress id="progress" max="1" value="1"></progress>
-
-<br>
-
-<button id="pause/resume" class="btn btn-primary">Pause/Resume</button>
-<button id="reset" class="btn btn-primary">Reset</button>
+<div class="center">
+  <h1><div id="phase"></div></h1>
+  <div id="message"></div>
+  <h1><div id="timer" class="countdown-timer"></div></h1>
+  <progress id="progress" max="1" value="1"></progress>
+  <br>
+  <div>
+    <button id="pause/resume" class="btn btn-primary">Pause/Resume</button>
+    <button id="reset" class="btn btn-primary">Reset</button>
+  </div>
+</div>
 
 <script>
   var focusTime = <%= @pomodoro.focus_time * 60 %>;
