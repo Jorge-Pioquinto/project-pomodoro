@@ -18,6 +18,7 @@
   var isBreakTime = false;
   var isPaused = false;
   var startTime = Date.now();
+  var timerId; // Declare timerId here
 
   document.getElementById('phase').textContent = 'Focus Time';
   document.getElementById('progress').max = focusTime;
@@ -54,17 +55,20 @@
             credentials: 'same-origin'
           });
 
-          var restart = confirm("Do you want to start another pomodoro?");
-          if (restart) {
-            // Restart the pomodoro
-            countdown = focusTime;
-            isBreakTime = false;
-            startTime = Date.now();
-            timerId = setInterval(updateTimer, 1000);
-          } else {
-            // Redirect to the pomodoro menu
-            window.location.href = "/tasks"; // Replace with your actual pomodoro menu URL
-          }
+          setTimeout(function() {
+            var restart = confirm("Do you want to start another pomodoro?");
+            if (restart) {
+              // Restart the pomodoro
+              countdown = focusTime;
+              isBreakTime = false;
+              startTime = Date.now();
+              updateTimer(); // Update the timer immediately
+              timerId = setInterval(updateTimer, 1000);
+            } else {
+              // Redirect to the pomodoro menu
+              window.location.href = "/tasks"; // Replace with your actual pomodoro menu URL
+            }
+          }, 2000); // Delay of 2 seconds
         }
       }
       // Update the countdown on the page
@@ -80,7 +84,7 @@
     }
   }
 
-  var timerId = setInterval(updateTimer, 1000);
+  timerId = setInterval(updateTimer, 1000);
 
   document.getElementById('pause/resume').addEventListener('click', function() {
     isPaused = !isPaused;
@@ -89,10 +93,10 @@
     } else {
       this.textContent = 'Pause';
       if (isBreakTime) {
-  startTime = Date.now() - (breakTime - countdown) * 1000;
-} else {
-  startTime = Date.now() - (focusTime - countdown) * 1000;
-}
+        startTime = Date.now() - (breakTime - countdown) * 1000;
+      } else {
+        startTime = Date.now() - (focusTime - countdown) * 1000;
+      }
     }
   });
 
