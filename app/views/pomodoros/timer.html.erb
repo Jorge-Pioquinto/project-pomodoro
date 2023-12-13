@@ -18,7 +18,7 @@
   var isBreakTime = false;
   var isPaused = false;
   var startTime = Date.now();
-  var timerId; // Declare timerId here
+  var timerId; 
 
   document.getElementById('phase').textContent = 'Focus Time';
   document.getElementById('progress').max = focusTime;
@@ -41,10 +41,10 @@
           startTime = Date.now();
           document.getElementById('phase').textContent = 'Focus Time';
           alert('Break time is done.');
-          clearInterval(timerId); // Stop the timer
+          clearInterval(timerId); 
           document.getElementById('phase').textContent = 'You Completed a Pomodoro!'; // Display the completion message
 
-          // Add this AJAX request
+          
           fetch('<%= complete_pomodoro_task_path(@pomodoro.id) %>', {
             method: 'PATCH',
             headers: {
@@ -58,20 +58,20 @@
           setTimeout(function() {
             var restart = confirm("Do you want to start another pomodoro?");
             if (restart) {
-              // Restart the pomodoro
+              
               countdown = focusTime;
               isBreakTime = false;
               startTime = Date.now();
-              updateTimer(); // Update the timer immediately
+              updateTimer(); 
               timerId = setInterval(updateTimer, 1000);
             } else {
-              // Redirect to the pomodoro menu
-              window.location.href = "/tasks"; // Replace with your actual pomodoro menu URL
+              
+              window.location.href = "/tasks"; 
             }
-          }, 2000); // Delay of 2 seconds
+          }, 2000); 
         }
       }
-      // Update the countdown on the page
+      
       var hours = Math.floor(countdown / 3600);
       var minutes = Math.floor((countdown % 3600) / 60);
       var seconds = countdown % 60;
@@ -79,7 +79,7 @@
         (hours < 10 ? '0' : '') + hours + ':' +
         (minutes < 10 ? '0' : '') + minutes + ':' +
         (seconds < 10 ? '0' : '') + seconds;
-      // Update the progress bar
+      
       document.getElementById('progress').value = countdown;
     }
   }
