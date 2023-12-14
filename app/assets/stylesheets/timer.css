@@ -58,3 +58,25 @@
 .share-btn-container .fa-whatsapp {
   color: #25d366;
 }
+
+.parent-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.text-container {
+  margin: 70px;
+  width: 55%;
+}
+
+.container-timer-image {
+  align-self: flex-start;
+}
+
+.container-timer-image img {
+  width: 90%;
+  margin: 30px;
+  opacity: 0.1;
+  border-radius: 20%;
+}
