@@ -1,0 +1,22 @@
+
+<% post_title = "I completed a task and I have earned #{current_user.pomodoro_tasks.where(completed: true).count} pomodoros" %>
+
+<% post_url = request.original_url %>
+
+<div class="share-btn-container">
+  <%= link_to "https://www.facebook.com/sharer.php?u=#{post_url}", class: "facebook-btn", target: "_blank" do %>
+    <i class="fab fa-facebook"></i>
+  <% end %>
+
+  <%= link_to "https://twitter.com/share?url=#{post_url}&text=#{post_title}", class: "twitter-btn", target: "_blank" do %>
+    <i class="fab fa-twitter"></i>
+  <% end %>
+
+  <%= link_to "https://www.linkedin.com/shareArticle?url=#{post_url}&title=#{post_title}", class: "linkedin-btn", target: "_blank" do %>
+    <i class="fab fa-linkedin"></i>
+  <% end %>
+
+  <%= link_to "mailto:?subject=#{post_title}&body=Check%20out%20this%20post:%20#{post_url}", class: "email-btn", target: "_blank" do %>
+  <i class="fas fa-envelope"></i>
+<% end %>
+</div>

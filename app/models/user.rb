@@ -21,6 +21,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :pomodoros, class_name: "Pomodoro", foreign_key: "user_id", dependent: :destroy
-  has_many :tasks, class_name: "Task", foreign_key: "user_id", dependent: :destroy
+  has_many :pomodoros
+  has_many :tasks
+  has_many :pomodoro_tasks, through: :tasks
+  has_many :pomodoro_tasks, through: :pomodoros
+
 end

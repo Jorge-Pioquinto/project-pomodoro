@@ -3,8 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.1"
 
-gem 'social-share-button'
-
 gem 'sassc-rails'
 
 gem 'simple_form'
