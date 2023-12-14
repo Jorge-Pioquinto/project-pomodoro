@@ -69,5 +69,9 @@
   },
   "files.associations": {
     "*.html.erb": "erb"
-  }
+  },
+  "cSpell.words": [
+    "Cirillo",
+    "Francesco"
+  ]
 }
