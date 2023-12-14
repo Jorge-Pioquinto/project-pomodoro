@@ -25,5 +25,5 @@
 </div>
 
 <p>
-  <%= social_share_button_tag(@task) %>
+<%= social_share_button_tag('Share to Facebook', data: {url: root_url}, allow_sites: %w(facebook)) %>
 </p>
