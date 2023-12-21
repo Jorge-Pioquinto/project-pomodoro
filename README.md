@@ -16,7 +16,7 @@ More Features to come:
 ### Dependencies
 
 * Ruby on Rails
-* PostgreSQL
+* PostgreSQL (Production. Uses sqlite3 for dev)
 * Javascript
 * Ajax
 * Bootstrap & [Bootswatch](https://bootswatch.com/united)
