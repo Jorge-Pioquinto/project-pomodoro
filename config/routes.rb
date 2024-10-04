@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  authenticate :user, ->(user) { user.admin? } do
+    mount RailsAdmin::Engine, at: "admin", as: "rails_admin"
+  end
   
   root "pages#home"
 
@@ -12,10 +16,10 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-resources :pomodoro_tasks do
-  member do
+  resources :pomodoro_tasks do
+    member do
     patch :complete
+    end
   end
-end
 
 end
