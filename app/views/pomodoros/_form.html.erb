@@ -2,33 +2,32 @@
   <% if pomodoro.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(pomodoro.errors.count, "error") %> prohibited this pomodoro from being saved:</h2>
-
       <ul>
-        <% pomodoro.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% pomodoro.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-<div class="form-group">
-  <%= form.fields_for(:pomodoro_tasks, pomodoro.new_record? ? pomodoro.pomodoro_tasks.new : pomodoro.pomodoro_tasks) do |pomodoro_tasks_form| %>
-    <%= form.label :task_id, "Task", class: "form-label mt-4", style: "display: block" %>
-    <%= pomodoro_tasks_form.select :task_id, Task.all.collect { |t| [t.description, t.id] }, { selected: Task.order(created_at: :desc).first&.id, include_blank: false }, { class: "form-select", id: "exampleSelect1" } %>
-  <% end %>
-</div>
+  <div class="form-group">
+    <%= form.fields_for(:pomodoro_tasks, pomodoro.new_record? ? pomodoro.pomodoro_tasks.new : pomodoro.pomodoro_tasks) do |pomodoro_tasks_form| %>
+      <%= form.label :task_id, "Task", class: "form-label mt-4", style: "display: block" %>
+      <%= pomodoro_tasks_form.select :task_id, current_user.tasks.collect { |t| [t.description, t.id] }, { selected: current_user.tasks.order(created_at: :desc).first&.id, include_blank: false }, { class: "form-select", id: "exampleSelect1" } %>
+    <% end %>
+  </div>
 
-<div class="form-group">
-  <%= form.label :focus_time, class: "form-label mt-4", style: "display: block" %>
-  <%= form.number_field :focus_time, class: "form-control", placeholder: "Focus Time" %>
-</div>
+  <div class="form-group">
+    <%= form.label :focus_time, class: "form-label mt-4", style: "display: block" %>
+    <%= form.number_field :focus_time, class: "form-control", placeholder: "Focus Time" %>
+  </div>
 
-<div class="form-group">
-  <%= form.label :break_time, class: "form-label mt-4", style: "display: block" %>
-  <%= form.number_field :break_time, class: "form-control", placeholder: "Break Time" %>
-</div>
-<br>
-<div>
-  <%= form.submit class:"btn btn-primary" %>
-</div>
+  <div class="form-group">
+    <%= form.label :break_time, class: "form-label mt-4", style: "display: block" %>
+    <%= form.number_field :break_time, class: "form-control", placeholder: "Break Time" %>
+  </div>
+  <br>
+  <div>
+    <%= form.submit class:"btn btn-primary" %>
+  </div>
 <% end %>

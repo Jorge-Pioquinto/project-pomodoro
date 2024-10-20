@@ -1,11 +1,15 @@
 class PomodorosController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_pomodoro, only: %i[ show edit update destroy ]
 
   # GET /pomodoros or /pomodoros.json
   def index
-    @pomodoros = Pomodoro.joins(:pomodoro_tasks)
-                         .where(pomodoro_tasks: { completed: false })
-                         .order(created_at: :desc)
+    if current_user
+      @pomodoros = current_user.pomodoros
+                               .joins(:pomodoro_tasks)
+                               .where(pomodoro_tasks: { completed: false })
+                               .order(created_at: :desc)
+    end
   end
 
   # GET /pomodoros/1 or /pomodoros/1.json
@@ -23,8 +27,7 @@ class PomodorosController < ApplicationController
 
   # POST /pomodoros or /pomodoros.json
   def create
-    @pomodoro = Pomodoro.new(pomodoro_params)
-    @pomodoro.user = current_user
+    @pomodoro = current_user.pomodoros.build(pomodoro_params)
 
     respond_to do |format|
       if @pomodoro.save
@@ -61,18 +64,18 @@ class PomodorosController < ApplicationController
   end
 
   def timer
-    @pomodoro = Pomodoro.find(params[:id])
+    @pomodoro = current_user.pomodoros.find(params[:id])
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_pomodoro
-    @pomodoro = Pomodoro.find(params[:id])
+    @pomodoro = current_user.pomodoros.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def pomodoro_params
-    params.require(:pomodoro).permit(:user_id, :focus_time, :break_time, pomodoro_tasks_attributes: [:id, :task_id, :completed, :_destroy, task_attributes: [:id, :description]])
+    params.require(:pomodoro).permit(:focus_time, :break_time, pomodoro_tasks_attributes: [:id, :task_id, :completed, :_destroy, task_attributes: [:id, :description]])
   end
 end

@@ -25,6 +25,5 @@ class User < ApplicationRecord
   has_many :pomodoros
   has_many :tasks
   has_many :pomodoro_tasks, through: :tasks
-  has_many :pomodoro_tasks, through: :pomodoros
 
 end

@@ -3,7 +3,9 @@ class PomodoroTasksController < ApplicationController
 
   # GET /pomodoro_tasks or /pomodoro_tasks.json
   def index
-    @pomodoro_tasks = PomodoroTask.all
+    @pomodoro_tasks = PomodoroTask.joins(:pomodoro)
+                                  .where(pomodoros: { user_id: current_user.id })
+                                  .order(created_at: :desc)
   end
 
   # GET /pomodoro_tasks/1 or /pomodoro_tasks/1.json
